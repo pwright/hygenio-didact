@@ -1,0 +1,5 @@
+link:didact://?commandId=vscode.didact.cliCommandSuccessful&text=kubectl-requirements-status$$kubectl[Check if the kubectl command line is available]
+
+
+[[kubectl-requirements-status]]
+_Status: unknown_
