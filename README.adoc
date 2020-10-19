@@ -1,4 +1,16 @@
-# hygenio-didact
+# Didact file respository
+
+This repo contains tutorials for software in the form of link:https://marketplace.visualstudio.com/items?itemName=redhat.vscode-didact[vscode-didact] walkthroughs.
+
+To perform the walkthroughs, you just need link:https://marketplace.visualstudio.com/items?itemName=redhat.vscode-didact[vscode-didact] installed in VSCode, for example:
+
+. Clone this repo and open it in VSCode.
+
+. Right click on the `skupper.didact.adoc` file and choose *Didact: Start Didact Tutorial from File*.
+
+To edit this file, you create Didact annotations using `skupper-build.sh` and  edit `skupper.adoc` to include those annotations from the `fragments.adoc` file.
+
+## About hygenio-didact
 
 _Using Hygen to create vscode-didact walkthroughs._
 
