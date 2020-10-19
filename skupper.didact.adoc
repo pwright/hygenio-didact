@@ -7,7 +7,7 @@ This guide uses an HTTP Hello World application with a frontend service and a ba
 The frontend uses the backend to process requests.
 In this scenario, the frontend is deployed in the `west` namespace, and the backend is deployed in the `east` namespace.
 
-image::/images/hello-world-entities.svg[,80%]
+image::images/hello-world-entities.svg[,80%]
 
 While these instructions use this particular application for demonstration purposes, the steps are the same for any Skupper deployment.
 
@@ -42,7 +42,13 @@ Here are some of your options for setting up Kubernetes clusters:
 These instructions require `kubectl` version 1.15 or later.
 See the https://kubernetes.io/docs/tasks/tools/install-kubectl/[kubectl installation guide] for more information.
 
-include::check-kubectl.adoc[]
+
+link:didact://?commandId=vscode.didact.cliCommandSuccessful&text=kubectl-requirements-status$$kubectl[Check if the kubectl command line is available]
+
+
+[[kubectl-requirements-status]]
+_Status: unknown_
+
 
 == Step 1: Install the Skupper command-line tool in your environment
 
@@ -55,11 +61,23 @@ To get the latest release of the Skupper command for your platform, download it 
 
 Linux
 
- curl -fL https://github.com/skupperproject/skupper/releases/download/{{skupper_release}}/skupper-cli-{{skupper_release}}-linux-amd64.tgz | tar -xzf -
+ curl -fL https://github.com/skupperproject/skupper/releases/download/0.3.2/skupper-cli-0.3.2-linux-amd64.tgz | tar -xzf -
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=setup$$curl%20-fL%20https%3A%2F%2Fgithub.com%2Fskupperproject%2Fskupper%2Freleases%2Fdownload%2F0.3.2%2Fskupper-cli-0.3.2-linux-amd64.tgz%20%7C%20tar%20-xzf%20-++[Linux-install]
+
+
 
 Mac
 
- curl -fL https://github.com/skupperproject/skupper/releases/download/{{skupper_release}}/skupper-cli-{{skupper_release}}-mac-amd64.tgz | tar -xzf -
+ curl -fL https://github.com/skupperproject/skupper/releases/download/0.3.2/skupper-cli-0.3.2-mac-amd64.tgz | tar -xzf -
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=setup$$curl%20-fL%20https%3A%2F%2Fgithub.com%2Fskupperproject%2Fskupper%2Freleases%2Fdownload%2F0.3.2%2Fskupper-cli-0.3.2-mac-amd64.tgz%20%7C%20tar%20-xzf%20-++[Mac-install]
+
+
 
 This produces an executable file named `skupper` in your current directory.
 
@@ -80,7 +98,13 @@ To test your installation, run the `skupper --version` command.
 You should see output like this:
 
  $ skupper --version
- skupper version {{skupper_release}}
+ skupper version 0.3.2
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=setup$$skupper%20--version++[Skupper-version]
+
+
 
 == Step 2: Configure access to multiple namespaces
 
@@ -99,9 +123,23 @@ Console for West
 
  export KUBECONFIG=$HOME/.kube/config-west
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$export%20KUBECONFIG%3D%24HOME%2F.kube%2Fconfig-west++[Kubeconfig-west]
+
+
+
+
 Console for East
 
  export KUBECONFIG=$HOME/.kube/config-east
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$export%20KUBECONFIG%3D%24HOME%2F.kube%2Fconfig-east++[Kubeconfig-east]
+
+
+
 
 === Log in to your clusters
 
@@ -135,10 +173,22 @@ Console for West
  kubectl create namespace west
  kubectl config set-context --current --namespace west
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$kubectl%20create%20namespace%20west%3B%20kubectl%20config%20set-context%20--current%20--namespace%20west++[Namespace-west]
+
+
+
 Console for East
 
  kubectl create namespace east
  kubectl config set-context --current --namespace east
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$kubectl%20create%20namespace%20east%3B%20kubectl%20config%20set-context%20--current%20--namespace%20east++[Namespace-east]
+
+
 
 === Check your configurations
 
@@ -150,10 +200,22 @@ Console for West
  $ skupper status
  skupper not enabled for west
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20status++[Status-west]
+
+
+
 Console for East
 
  $ skupper status
  skupper not enabled for east
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$skupper%20status++[Status-east]
+
+
 
 == Step 3: Install the Skupper router in each namespace
 
@@ -168,12 +230,26 @@ West
  $ skupper init
  Skupper is now installed in namespace 'west'.  Use 'skupper status' to get more information.
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20init++[Init-west]
+
+
+
+
 Now run the `skupper init` command in the East namespace.
 
 East
 
  $ skupper init --cluster-local
  Skupper is now installed in namespace 'east'.  Use 'skupper status' to get more information.
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$skupper%20init%20--cluster-local++[Init-east]
+
+
+
 
 Note that using `--cluster-local` in East is done simply to make local development with Minikube easier.
 It's not required if your two namespaces are on different hosts or on public clusters.
@@ -187,10 +263,22 @@ West
  $ skupper status
  Skupper enabled for namespace 'west'. It is not connected to any other sites.
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20status++[Status-west]
+
+
+
 East
 
  $ skupper status
  Skupper enabled for namespace 'east'. It is not connected to any other sites.
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$skupper%20status++[Status-east]
+
+
 
 == Step 4: Connect your namespaces
 
@@ -213,6 +301,12 @@ West
 
  skupper connection-token $HOME/secret.yaml
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20connection-token%20%24HOME%2Fsecret.yaml++[Token-west]
+
+
+
 === Use the token to form a connection
 
 With the token in hand, you are ready to connect.
@@ -221,6 +315,12 @@ Pass the token from West to the `skupper connect` command in East.
 East
 
  skupper connect $HOME/secret.yaml
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$skupper%20connect%20%24HOME%2Fsecret.yaml++[Token-east]
+
+
 
 If your console sessions are on different machines, you might need to use `scp` or a similar tool to transfer the token.
 If you are using Minikube, link:minikube.html#prerequisites[you need to run `minikube tunnel`] for this to work.
@@ -235,10 +335,22 @@ West
  $ skupper status
  Skupper enabled for namespace 'west'. It is connected to 1 other site.
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20status++[Status-west]
+
+
+
 East
 
  $ skupper status
  Skupper enabled for namespace 'east'. It is connected to 1 other site.
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$skupper%20status++[Status-west]
+
+
 
 == Step 5: Expose your services
 
@@ -256,11 +368,23 @@ West
 
  kubectl create deployment hello-world-frontend --image quay.io/skupper/hello-world-frontend
 
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$kubectl%20create%20deployment%20hello-world-frontend%20--image%20quay.io%2Fskupper%2Fhello-world-frontend++[Deploy-west]
+
+
+
 Likewise, use `kubectl create deployment` to start the backend in East.
 
 East
 
  kubectl create deployment hello-world-backend --image quay.io/skupper/hello-world-backend
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$kubectl%20create%20deployment%20hello-world-backend%20--image%20quay.io%2Fskupper%2Fhello-world-backend++[Deploy-east]
+
+
 
 === Expose the backend service
 
@@ -272,6 +396,12 @@ Use the `skupper expose` command in East to make `hello-world-backend` available
 East
 
  skupper expose deployment hello-world-backend --port 8080 --protocol http
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=East$$skupper%20expose%20deployment%20hello-world-backend%20--port%208080%20--protocol%20http++[Expose-east]
+
+
 
 === Check the backend service
 
@@ -292,6 +422,12 @@ Use `kubectl expose` with `--type LoadBalancer` to make the frontend accessible 
 West
 
  kubectl expose deployment hello-world-frontend --port 8080 --type LoadBalancer
+
+
+
+link:++didact://?commandId=vscode.didact.sendNamedTerminalAString&text=West$$kubectl%20expose%20deployment%20hello-world-frontend%20--port%208080%20--type%20LoadBalancer++[Expose-west]
+
+
 
 It takes a moment for the external IP to become available.
 If you are using Minikube, link:minikube.html#prerequisites[you need to run `minikube tunnel`] for this to work.
@@ -324,7 +460,7 @@ See the https://github.com/skupperproject/skupper-example-hello-world/blob/maste
 
 Skupper command installation
 
- curl -fL https://github.com/skupperproject/skupper-cli/releases/download/{{skupper_release}}/skupper-cli-{{skupper_release}}-linux-amd64.tgz | tar -xzf -
+ curl -fL https://github.com/skupperproject/skupper-cli/releases/download/0.3.2/skupper-cli-0.3.2-linux-amd64.tgz | tar -xzf -
 
 West: Setup
 

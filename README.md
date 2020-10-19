@@ -1,2 +1,32 @@
 # hygenio-didact
-Using Hygen to create vscode-didact walkthroughs
+
+_Using Hygen to create vscode-didact walkthroughs._
+
+link:https://marketplace.visualstudio.com/items?itemName=redhat.vscode-didact[vscode-didact] is a VSCode extension that turns VSCode into a walkthough system for cloud-native development. 
+It supports adding logic to markdown and asciidoc documents to promote "Docs driven development". 
+Imagine a readme that checks and installs dependencies. 
+However, the code required to turn your readme into a masterpiece of User Experience is tricky.
+
+link:https://github.com/jondot/hygen/[Hygen] is a cli available from npm that allows you template files driven by YAML, providing a good Author Experience to manipulate the didact code, while enforcing consistency.
+
+The `hygenic didact` is an opinionated convention for writing didact walkthroughs.
+Those conventions differ for AsciiDoc versus Markdown.
+
+
+For AsciiDoc:
+
+1.  Each didact interaction is an include statement referencing a single section from a separate file eg readme-or-blank.adoc
+2.  The fragments file is tagged so that the include statement references a specific section
+
+Naming example:
+
+skupper.didact.adoc
+skupper-or-blank.adoc
+or-blank.adoc
+
+
+include:{didact}-or-blank.adoc[tags=check-kubectl]
+
+// tag::check-kubectl[]
+.. <didact code to check kubectl>
+// end::check-kubectl[]
