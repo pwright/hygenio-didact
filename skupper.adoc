@@ -2,6 +2,8 @@
 
 = Getting started with Skupper
 
+icon:cogs[] Whererever you see this icon in the text below, you can click the link to perform the documented action.
+
 == Overview
 
 To show Skupper in action, we need an application to work with.
